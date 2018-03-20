@@ -1,0 +1,125 @@
+
+
+//--------------------------------------------------------
+
+Understanding Lambdas
+Using Lambdas
+Function Interfaces
+Method References
+Collection Improvements
+
+//--------------------------------------------------------
+
+
+why lambdas?
+
+ ==> Enables Functional Programming
+ ==> Readable & concise code
+ ==> Easier-to-use APIs and libraries
+ ==> Enables support for parallel processing
+ 
+ 
+ //--------------------------------------------------------
+ 
+ Dev support
+ 
+   ==> install JDK 8
+ 
+ //--------------------------------------------------------
+ 
+ Functional vs Object Oriented Programming
+ 
+ 
+ 
+ //--------------------------------------------------------
+ 
+ Passing behavior in OOP
+ 
+ code in OOP
+ 
+ 	==> Everything is an object
+ 	==> All code blocks are "associated" with classes and objects
+ 		
+ 	
+ //--------------------------------------------------------
+ 
+ Function as values
+ -------------------
+ 
+ 
+ 	Inline values
+ 	
+ 	String name="foo";
+ 	double pi=3.14;
+ 	
+ 	aBockOfCode={
+ 	//..
+ 	//..
+ 	}
+ 	
+ 	
+aBlockOfCode=public void perform(){
+				System.out.println();			
+		     }								
+
+
+Lambda Expression
+------------------
+aBlockOfCode=()->System.out.println();			
+		     							
+
+//--------------------------------------------------------
+ 
+  	
+ 	
+Lambda Expression Examples
+---------------------------
+greetingFunction=()->System.out.println("Hello World");
+
+doubleNumberFunction=(int a)->a*2;
+
+addFunction=(int a,int b)->a+b;
+
+safeDivideFunction=(int a,int b)->{
+	if(b==0) return 0;
+	return a/b;
+}
+
+sringLengthCountFunction=(String s)->s.length();
+
+
+ //--------------------------------------------------------
+ 
+ 
+ Lambda as Interface Type
+ 
+ Lambda vs Interface Implementation
+ 
+ Type Inference  ( TypeInferenceExample.java )
+ 
+ Runnable Using Lambdas ( RunnableExample.java )
+ 
+ Functional Interface
+ 
+ 
+ //--------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

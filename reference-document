@@ -1,0 +1,2101 @@
+
+
+=================================================================================================
+Functional Programming
+=================================================================================================
+
+-------------------------------------------------------------------------------------  
+ 1.1 What Is Functional Programming?
+-------------------------------------------------------------------------------------     		  		 
+ 		 
+What is functional programming and what are its origins? What are its main principles?
+	
+	- The origins of functional programming trace back to lambda-calculus
+	- The whole program is a mathematical function
+	- Functions are stateless and use no variables 		
+	
+-------------------------------------------------------------------------------------
+
+ Lambda-Calculus
+ 
+ 	- Alonzo CHurch, 1935
+ 	- The first 'programming language'
+ 	
+
+-------------------------------------------------------------------------------------
+ 	
+ Lambda-Calculus principles
+ 
+ 	- A language of functions
+ 	- In mathematical sense
+ 		 => Same Input ==> Same Output
+ 		 => That is, stateless
+ 		 => a.k.a purity, absence of side-effects, referential transparency
+     - No variables, no assignments, no loops
+
+-------------------------------------------------------------------------------------
+
+Functional Languages
+
+	1. List
+		- LISt Processor
+		- 1958, second programming language after Fortran Scheme Clojure(2007,runs on JVM)
+	
+	2. Haskel
+	
+	3. ML
+		- MetaLanguage
+		- 1973 - F#( Microsoft .NET, Multi paradigm )
+
+    
+-------------------------------------------------------------------------------------
+
+    "Language Shapes Thought"
+
+    "True in Computer Science as well as in Psychology"
+
+-------------------------------------------------------------------------------------
+
+Functional Languages
+
+        - First class functions : Functions can be passed to or returned from functions
+        - Function composition   : Chains of functions calling each other
+        - Immutable data        : Prevents inadvertently introduced side effects
+        - Pure functions        : No side effects; same output for same input
+        - Ease of parallelism   : Pure functions acting on immutable data
+
+-------------------------------------------------------------------------------------
+
+First Class Functions 
+
+        - A function can be stored in a variable or value
+        - The return value of a function can be a function
+        - A parameter of a function can be a function
+
+A higher order function
+
+        - A function whose return value is a function
+        - A function with a parameter that is a function
+
+-------------------------------------------------------------------------------------
+
+why FP?
+
+Parallelism
+
+	- Composition instead of communication  - f(g(a),h(b),g(c))
+	- Stateless function g and h can be evaluated in any order
+	- Even parallel
+	- Communication only thru return value
+	- No race Condition, No need to synchronize, and so on 
+	
+-------------------------------------------------------------------------------------
+
+
+
+-------------------------------------------------------------------------------------
+1.2- Interfaces get a Boost ( java 8)
+-------------------------------------------------------------------------------------
+
+What are the new capabilities of Java interfaces? What are default methods? How can we take advantage of these capabilities?
+	
+	-Interfaces can have default and static methods
+	-Interfaces can carry behaviour but not state
+	-The Comparator interface features default and static methods	 
+	
+-------------------------------------------------------------------------------------
+
+	- static methods
+	- default methods
+	- The comparator example
+
+	=> static methods
+
+	- Interface have always had public static final fields
+	- in Java 9, they can have public static methods	
+	
+	=> default methods
+	
+	- A concrete instance method which can be overridden
+	- Basically, a regular instance method
+	- Interface used to provide signatures
+	- They now provide behavior
+
+
+    demo - Scalable.java
+    demo - Interfaces.java
+    
+-------------------------------------------------------------------------------------
+
+Interfaces vs. Abstract casses
+
+	- Interfaces are still stateless ( no instance fields )
+	- Interface provide behavior, not state
+	- Abstract class provide behavior and state
+
+
+-------------------------------------------------------------------------------------
+1.3 - Some Interfaces are More Functional Than Others
+-------------------------------------------------------------------------------------
+
+What is a functional interface? What are some functional interfaces in the Java API? How can we declare that an interface is functional?
+	
+	- Functional interfaces have a single abstract method
+	- The API contains over 40 functional interfaces
+	- The @FunctionalInterface annotation identifies pure functional interfaces
+
+
+-------------------------------------------------------------------------------------
+
+Functional Interface ( FI )
+
+
+	- Any interface with a single abstract method
+	- static & default methods allowed
+	- Examples	
+		=> Scalable
+		=> Runnable,Comparable,Comparator, Iterable
+		
+-------------------------------------------------------------------------------------
+		
+Pure Functional Interfaces
+
+	- An FI intended to be implemented by stateless classes
+	- Example
+		=> Scalable: not pure
+		=> Runnable: not pure
+		=> Comparable : not pure
+		=> Comparator: pure
+		
+	- Pure FIs respect the Functional Programming paradigm
+	- They play an important role in conjunction with streams
+	
+-------------------------------------------------------------------------------------
+
+@FunctionalInterface Annotation
+
+	- Intended for pure FIs
+	- Compiler checks the "single abstract method" property
+	- Comparator is annotated with it
+	- Comparable is not annotated with it
+	
+
+-------------------------------------------------------------------------------------
+
+FIs in the java 9 API
+
+	- More than 40 pure FIs
+	- Package java.util.function
+		
+	E.g
+			
+		function accepting an object
+			
+			public interface Consumer<T>{
+				void accept(T t);
+			}	
+			
+		function producing an object
+			
+			public interface Producer<T>{
+				T get();
+			}	
+			
+	 	
+
+
+=================================================================================================
+ 2- Lambda Expressions
+=================================================================================================
+
+    why lambdas?
+
+    ==> Enables Functional Programming ( is the way to wrote Function in java language )
+    ==> Readable & concise code
+    ==> Easier-to-use APIs and libraries
+    ==> Enables support for parallel processing
+
+-------------------------------------------------------------------------------------
+
+    Java =>  Object Oriented Programming /  Functional Programming   ????
+    
+ -------------------------------------------------------------------------------------
+
+    Passing behavior in OOP
+    
+    code in OOP
+    
+        ==> Everything is an object
+        ==> All code blocks are "associated" with classes and objects
+
+-------------------------------------------------------------------------------------
+
+    Function as values
+    ------------------- 		
+
+        Inline values
+
+        String name="foo";
+        double pi=3.14;
+
+        aBockOfCode={
+        //..
+        //..
+        }
+        
+-------------------------------------------------------------------------------------
+
+aBlockOfCode=public void perform(){
+				System.out.println();			
+		     }								
+ 	 
+( convert above code to LE )
+
+ - HelloWorld Example
+
+-------------------------------------------------------------------------------------
+2.1 - Writing Your First Lambda Expression
+-------------------------------------------------------------------------------------	
+What is the basic syntax for lambda expressions? How are lambda expressions related to anonymous classes? What parts of a lambda expression can be omitted?
+	
+	- Lambda expressions are characterized by the new “arrow” notation
+	- Some anonymous classes can be replaced by lambda expressions
+	- Parameter types of lambda expressions can often be omitted
+
+-------------------------------------------------------------------------------------
+
+Writing Your First Lambda Expression
+
+
+	Comparator<String> byLength=(String a,String b)->{
+		return Integer.compare(a.length,b.length);
+	}
+	
+
+    demo : Lambda1.java
+
+
+-------------------------------------------------------------------------------------  
+
+lambda Expression syntax:
+
+    - parameters  -> body    
+
+    parameters  
+
+        (int a,int b)
+        (a,b)
+        (a)
+        ()
+        a
+
+    body 
+
+        {block}
+        expression
+
+
+
+-------------------------------------------------------------------------------------
+2.2 - Typing Lambda Expressions	
+-------------------------------------------------------------------------------------
+
+What is type inference and how does it apply to lambda expressions? What are the legal contexts for a lambda expression?
+
+	- The compiler fills in missing types using type inference
+	- Type inference can derive parameter types for lambda expressions
+	- Lambda expressions can appear where a functional interface is expected
+
+-------------------------------------------------------------------------------------
+	
+Type Inference
+
+	- infer a type at compile time
+	- The compiler filling in a missing type
+	- Been there since Java 5
+	
+		
+		public static <T> T getFirst<T[] array){
+			return array[0];
+		}	
+		
+		String[] strarray={"A","B"};
+		getFirst(strarray);
+		
+		
+	- code does not specify type parameter for 'getFirst'
+	- Still, no cast is needed in assignment
+	- Type parameter "String" is iferred from actual parameter "strarray" 
+
+-------------------------------------------------------------------------------------
+
+Type Inference and Lambdas
+
+
+	- Identify the FI being implemented
+	- Identify the parameters type ( if omitted )
+	
+	
+	imp-note:
+	
+	- Context must contain enough info to the receiving FI
+	
+		=> RHS of assignment
+		
+			Consumer<String> = lambda
+			
+		=> Actual parameter of a method or constructor
+		
+			new Thread(lambda)
+				
+        => Argument of 'return'
+        
+        		return lambda
+        		
+        	=> Argument of cast
+
+
+   demo : LambdaInference.java     	
+        		
+-------------------------------------------------------------------------------------
+ 2.3 - Capturing Values
+-------------------------------------------------------------------------------------
+What variables can lambda expressions access? Does every usage of a lambda expression give rise to a new object?
+	
+	-Lambda expressions can access variables from the enclosing scopes
+	-Captured local variables must be effectively final
+	-Lambda expressions are instantiated only when necessary
+
+-------------------------------------------------------------------------------------
+
+	- Capturing Fields
+		
+		- Lambda expressions can access
+				=> static fields of enclosing class
+				=> Instance fields of enclosing object
+
+		- How - They store a reference to the enclosing object
+		
+-------------------------------------------------------------------------------------
+
+	- Effectively Final Variables
+	
+		- A variable that is used as if it was final
+		- No reassigned
+		
+			Note: it is good practice to declare them final
+				
+-------------------------------------------------------------------------------------	
+	
+	- Capturing Local Variables
+		
+		- LE can access 	local variables of the enclosing method provided they are effectively final
+		
+		How?
+		
+			=> They store a copy of their value ( same rule as anonymous class )
+	
+	
+-------------------------------------------------------------------------------------	
+	
+
+ LE v.s Anonymous Class
+ 
+ 	- Lambdas are more succinct ( short )
+ 	- Lambdas do not create additional class files
+ 	- Not every occurrence of a lambdas creates new object
+ 	- On the other hand:
+ 		=> Lambdas only work for FIs
+ 		=> Anonymous classes can have state ( that is, fields )
+ 	
+    demo - lambdaimplementation.java
+-------------------------------------------------------------------------------------	
+2.4- Method References
+-------------------------------------------------------------------------------------	
+
+What are method references? What are method references useful for?
+
+	- A method reference is an expression denoting a method
+	- Method references can be used in place of lambda expressions
+	- Method references bridge existing methods with functional interfaces
+
+-------------------------------------------------------------------------------------	
+
+Method References
+
+	- Function Pointers Come to Java
+    - A MR is an expression denoting a method
+    - Similar to function Pointers in C/C++
+    - More efficient than reflection ( That is Method class )
+    
+	    
+	    
+	    - static method ===> Employee::getmaxSalary
+	    - Instance method, unspecified instance ===> Employee::getSalary
+	    - Instance method, specified instance ===> mike::getSalary
+	    - constructor                         ===> Employee::new
+	    
+	    - Instance method of super super-class    ==> super::foo
+	    - Array constructor     ===>
+	    
+	    		
+	
+	- Method References have No Intrinsic Type
+	
+		=> Type Inference assigns a type based on context
+		=> Hence, a telling receiving context needed
+		
+		=> The Context must identify a FI
+		
+		
+     - Legal Contexts for Method references
+     
+     	=> RHS of assignment
+     	=> Actual parameter of a method or constructor
+     	=> Argument of Return
+     	=> Argument of cast
+     	
+
+   demo - Methodreferences.java   	
+
+
+
+
+=================================================================================================
+ Level 3 - Functional Interfaces
+=================================================================================================
+
+-------------------------------------------------------------------------------------	
+3.1 - Pre-Existing Functional Interfaces
+-------------------------------------------------------------------------------------	
+
+What are the functional interfaces that were already present in Java 7? Can they be used as targets of lambda expressions?
+	
+	- Java 7 has several common functional interfaces
+	- Functional interfaces pertain to threads, GUIs, and object sorting
+	- Comparator is a notable pure functional interface
+
+-------------------------------------------------------------------------------------	
+
+	- Runnable & Callable
+	- ActionListener
+	- Comparable and Comparator
+	
+	Comparable .vs Comparator
+	
+		- comparator is pure FI
+		
+			=> A stateless object comparing two other objects
+			
+		- Comparable is the opposite of apure FI	
+		
+			=> It needs state
+			=> Otherwise, comparison with another object would be meaningless
+     	
+	
+-------------------------------------------------------------------------------------
+3.2 - New Functional Interfaces
+-------------------------------------------------------------------------------------
+What functional interfaces were added to Java 8?
+	
+	- Java 8 features a new package with more than 40 functional interface
+	- New functional interfaces cover all common function types
+	- Special versions of such interfaces are devoted to primitive types
+
+-------------------------------------------------------------------------------------
+
+	A wealth of FIs
+	
+		- A package java.util.function;
+		- Over fourty FIs
+		- All common types of functions, ready to use
+		
+		
+		Functional Interfaces, by Function Type
+		
+		
+		nothing->T            Supplier
+		T->nothing            Consumer
+		T->T                  UnaryOperator
+		T,T->T                BinaryOperator
+		S->T                  Function
+		T->boolean            Predicate  
+
+    demo- FunctionalInterfaces.java
+-------------------------------------------------------------------------------------
+
+	  UnaryOperator FI
+		
+		- Represents an object updater/modifier, which preserve types
+		- Use with the following method of interface List<T>
+			
+			=> void replaceAll(UnaryOperator<T> op);
+	
+	  BinaryOperator FI
+		
+		- Represents an operation between two objects, preserving the type
+		- Use with "reduce" operations in streams
+		
+	  Function FI
+	   
+	   	- Represents an object transformer, from one type to another		
+	   	- Use with Comparator, as key extractor, "map" operations in streams
+	   	
+	   		e.g
+	   		
+	   		Comparator<Employee> byName=
+	   			Comparator.comparing(e->e.getName());
+	   			
+	   Predicate FI
+	   
+	   	- Represents a property that some objects have
+	   	- Use with following method of interface Collection<T>:
+	   	
+	   		boolean removeIf(Predicate<T> p);
+	   		
+	    - Also, 'filter' operations in streams					
+		 
+	
+---------------------------------------------------------------------------------------
+3.3- Functional Interfaces for Primitive Types	
+---------------------------------------------------------------------------------------
+Are there functional interfaces whose arguments and return types are primitive types?
+	
+	- Most functional interfaces have variants for primitive types
+	- Primitive types int, long, and double are supported
+	- Primitive functional interfaces avoid the overhead of wrapper classes
+
+---------------------------------------------------------------------------------------
+
+Functional Interfaces of Primitive Types
+
+	- FI whose arguments and return types are primitive types
+	
+	
+	FI Name       Variants with X=Int,Long,Double         FunctionType
+	
+	
+	Supplier         XSupplier                             noting->X
+	Consumer         XConsumer                             X->nothing
+	UnaryOperator    XUnaryOperator                        X->X
+	BinaryOperator   XBinaryOperator                       X,X->X
+	Predicate        XPredicate                            X->boolean
+
+---------------------------------------------------------------------------------------
+
+Variants of Function
+	
+	One primitive type : ToXFunction<T>          ( type:T ->X )
+	
+		- ToIntFunction<T>, etc.
+	
+	Two primitive types : XToYFunction<T>        ( type:X ->Y )
+	
+		-IntToLongFunction,IntToDoubleFunction, and so on
+	
+	
+	No IntToIntFunctiom, why
+	
+		There's IntUnaryOperator
+		
+---------------------------------------------------------------------------------------
+
+	BooleanSuppiler
+	
+	
+		A supplier of random booleans
+		
+			final Random rand=new Random();
+			BooleanSupplier randomBS=rand::nextBoolean;		
+	
+	     			
+---------------------------------------------------------------------------------------
+3.4 - Composing Functions
+---------------------------------------------------------------------------------------			
+
+Can we implement a functional interface by composing simple objects?
+	
+	- Several functional interfaces support composition via default methods
+	- Function and Consumer support sequential composition
+	- Predicate supports Boolean composition	
+---------------------------------------------------------------------------------------			
+	
+		
+Some FIs provide Composition Methods
+	
+	
+	- create complex functions from simpler
+	- Predicate, Consumer, Function and Comparator		
+		
+---------------------------------------------------------------------------------------		
+
+Composing Predicates
+	
+	
+	The usual 3 boolean connectives: and,or,not
+	
+	Predicate<T> a=...,b=...;
+	Predicate<T> c=a.and(b),
+	             d=a.or(b),
+	             e=a.negate();
+	             
+---------------------------------------------------------------------------------------	  
+
+Composing Consumers:
+
+	- Apply two consumers to the same argument sequential composition
+	
+	- Method addThen
+	
+		Consumer<T> a=...,b=...;
+		Consumer<T> c=a.andThen(b);
+		
+		
+	 - Objective: Writing the same string to screen and to a file
+		
+			PrintWriter writer=new PrintWriter("filename.txt");
+			
+			Consumer<String> logger=writer::println;
+			Consumer<String> screener=System.out::println;
+			
+			Consumer both=screener.andThen(logger);
+			
+			both.accept("Program started");
+			
+---------------------------------------------------------------------------------------	
+
+Composing Functions:
+	
+		
+	 - Apply two functions, sequentially	
+	 - Given two functions f:A->B,g:B->C
+	 
+	 	f.andThen(g)      computes g(f(x)    type A -> C
+	 	g.compose(f)      computes the same thing!
+	 	
+	 	so:
+	 	
+	 	"andThen" , reads left-to-right
+	 	"compose" , reads right-to-left
+		
+		
+		
+	 - Objective : Get the initial leter of an Employee's name
+	 
+
+		  	Function<Employee,String> getName=Employee::getName;
+		  	Function<String,Character> getFirstLetter=name.charAt(0);
+		  	Function initial=getName.andThen(getFirstLetter);
+		  	  	
+		
+---------------------------------------------------------------------------------------
+
+Composing Comparators:
+
+
+	- Apply two comparators , lexicographically
+	- That is:
+	
+		1. Apply first comparator
+		2. if first comparison is inconclusive ( result 0 ), apply second comparator
+	           
+	           
+	- Method 'thenComparing'           
+	
+	- Objective: compare Employees by name , then by salary
+	
+			Comparator<Employee> byName=Comparator.comparing(Employee::getName)
+			Comparator<Employee> bySalary=Comparator.comparing(Employee::getSalary)
+			Comparator<Employee> byNameAndSalary=byName.comparingThen(bySalary);
+
+---------------------------------------------------------------------------------------			
+	
+			
+	
+
+=================================================================================================
+ Level 4 - Streams
+=================================================================================================
+	
+	
+	
+ 4.1. Introduction on stream,collections, and iterators	
+---------------------------------------------------------------------------------------			
+ 
+ What is a stream? How does it relate to collections and iterators?
+	
+	- Streams are sequences of data elements
+	- Streams support internal iteration
+	- Streams are processed by operation pipelines
+
+---------------------------------------------------------------------------------------			
+	
+ A Stream is
+ 
+ 	- A sequence of objects
+ 	- Supporting 'internal iteration'
+ 	
+---------------------------------------------------------------------------------------	 	
+ 	
+Sequence of Objects
+
+
+	- List                  -Iterator                        - Stream
+		
+		. add()                . iterate()                       . internal iteration
+		. remove()
+		. serach()
+		. iterate()
+
+---------------------------------------------------------------------------------------	
+
+Printing a Sequence of Objects
+
+	List<Integer> l=....;
+	for(Integer n:l)
+		System.out.println(n);
+		
+		
+	Iterator<Integer> i=....;
+	while(i.hasNext())
+		System.out.println(i.next());
+		
+					
+	Stream<Integer> s=....;
+		s.forEach(System.out::println);     <- No variables to refer elements! This is Internal iteration
+	 		
+	
+	
+---------------------------------------------------------------------------------------
+
+Stream Interface
+
+	- Interface java.util.Stream<T>
+		
+		=> 30+ instance methods
+		=> 7 static methods	
+	
+	
+	
+---------------------------------------------------------------------------------------
+
+Stream Interface
+
+	- Repeatedly apply an operation to all elements
+	- Responsibility shifts client to sream library 	
+	
+	
+---------------------------------------------------------------------------------------
+
+Type of Operations
+
+	- Build ops  => creates stream from  data source
+	- Intermediate ops => Convert one stream to other
+	- Teminal ops => Convert stream into something else or nothing
+	
+
+---------------------------------------------------------------------------------------
+
+A Pipeline of Stream Operations
+
+
+	Build-operation ===> intermediate op ==> intermediate op ==> ... ==> terminal-operation  ==> result
+	
+	
+---------------------------------------------------------------------------------------
+
+Example
+
+	Print the names of the employees with salary at least 2500$, alphabetically sorted
+	
+	Employee[] emps={ /* put employees here */ };
+	
+	Arrays.stream(emps)                                      // build-operation
+					   .filter(e->e.getSalaray()>=2500)      // intermediate-operation 
+		               .map(Employee::getName)
+		               .sorted()
+		               .forEach(System.out::println);        // terminal-operation
+			
+	
+
+---------------------------------------------------------------------------------------
+
+Types of Stream
+
+	- Ordered or Unordered
+	- Sequential or parallel
+	
+---------------------------------------------------------------------------------------
+
+Ordered vs. Unordered
+
+	- Objects in a stream may have a fixed order, or not
+	- Ordered Stream
+		=> Operations are performed in that order			
+	- Unordered Stream
+		=> Operations may be performed in any order
+	- Sequential stream
+		=> Operations are performed on one object at a time
+	- Parallel stream
+		=> Operations may be performed on several objects in parallel
+			
+			
+	
+---------------------------------------------------------------------------------------	
+	
+	
+	
+4.2 - Creating a Stream
+---------------------------------------------------------------------------------------	
+How can you create a stream?
+	
+	- Streams can be made out of a static sequence of values
+	- An existing collection can generate a stream
+	- You can procedurally generate stream elements on the fly
+	
+---------------------------------------------------------------------------------------	
+
+
+Creating streams from..
+
+	- A static sequence objects
+	- A Collection
+	- A Computation
+	
+---------------------------------------------------------------------------------------	
+
+A static sequence objects
+
+
+	Ex.
+		Stream<Integer> fib=Stream.of(1,1,2,3);
+		
+		Employee[] emps=...;
+		Stream<Integer> empStream=Stream.of(emps);
+		
+---------------------------------------------------------------------------------------	
+
+Arrays & Collections
+
+	Ex.	
+		Employee[] emps=...;
+		Stream<Integer> empStream=Arrays.stream(emps);
+		  	
+	
+	Streams from arrays are ordered & sequential.
+		
+---------------------------------------------------------------------------------------	
+
+Creating Streams from Collections
+	
+	Collection<Employee> emps=..;
+	Stream<Employee> empStream=emps.stream();
+
+	
+	Streams from list are ordered
+	Streams from sets are unordered
+
+---------------------------------------------------------------------------------------	
+
+Streams from computations
+
+
+	Elements are computed on demand:
+	
+		1. each one 'separately'(via supplier), or
+		2. each one from previous one ( via UnaryOPerator )
+		
+		Note: On demand computing is called 'lazy evaluation'
+		
+---------------------------------------------------------------------------------------	
+
+
+Infinite Streams
+
+
+	- Computed streams are ( potentially ) infinite
+	- No bound on their length
+	- Only a finite number of them will ever be created
+			
+
+---------------------------------------------------------------------------------------
+
+Creating Each Element separately
+
+	- In interface Stream
+		static <T> Stream<T> generate(Supplier<T> s)
+	- Generates an unordered infinite stream
+	- Example ( a stream of random integers) :
+	
+		Random random=new Random();
+		Stream<Integer> randoms=Stream.generate(random::nextInt);		
+
+
+---------------------------------------------------------------------------------------
+
+
+Creating Each Element from the Previous One
+
+
+	- In interface Stream
+		static <T> Stream<T> ieterate(T first,UnaryOperator<T> next)
+	- Generates an ordered infinite stream
+	- Example ( a stream of random integers) :
+	
+		Stream<String> as=Stream.iterate("a",s->s+"a");
+
+
+---------------------------------------------------------------------------------------
+
+
+4.3-Understanding Lazy Evaluation
+---------------------------------------------------------------------------------------
+What do we mean by “lazy operations” and “lazy evaluation”?
+	
+	- Lazy means “as late as possible”
+	- Stream elements are generated and processed when the terminal operation requires it
+	- A stream can only be traversed once
+
+---------------------------------------------------------------------------------------
+
+
+Lazy  = As Late As Possible ( on demand )
+Eager = As Soon As Possible
+	
+	 		 
+---------------------------------------------------------------------------------------
+
+
+An Eager Example
+
+	Set<Employee> s1=...
+	Set<Employee> s2=...
+	s2.addAll(s1)      <= all elements of s1 are added to s2, right now, this is eager evaluation
+	
+	
+---------------------------------------------------------------------------------------
+
+A Lazy Example
+
+	Random random=new Random();
+	
+	Stream<Integer> randoms=
+        Stream.generate(random::nextInt);     <= no integer is generated yet, this is lazy evaluation;  but when are the generated
+
+
+---------------------------------------------------------------------------------------
+
+Pushing & Pulling
+
+    Elements are created and proceses when required by the terminal operation,that is
+    elements are pulled from the end not pushed from the start
+
+---------------------------------------------------------------------------------------
+
+Example - section4.LazyTests.java
+
+---------------------------------------------------------------------------------------
+
+Streams can only be traversed once 		 	
+
+---------------------------------------------------------------------------------------
+
+Traversing Twice
+
+Stream<Integer> fib=Stream.of(1,1,2,3);
+fib.forEach(System.out::println);
+fib.forEach(System.out::println); // Exception
+
+---------------------------------------------------------------------------------------
+
+Wrong way to Split a Stream Pipeline
+
+
+Stream<Integer> fib=Stream.of(1,1,2,3);
+fib.limit(2);
+fib.forEach(System.out::println);
+
+Note : intermediate operations return a new stream
+---------------------------------------------------------------------------------------
+
+
+Correct way tp split a Stream pipeline
+
+Stream<Integer> fib=Stream.of(1,1,2,3);
+Stream<Integer> shortFib=fib.limit(2);
+shortFib.forEach(System.out::println);
+
+
+---------------------------------------------------------------------------------------
+
+4.3-Streams as Monads
+---------------------------------------------------------------------------------------
+
+What is a monad? In what sense are streams monads?
+
+    - Monads are parametric types adding context to values
+    - Streams conform to monads
+    - Monads support operation chaining
+
+---------------------------------------------------------------------------------------
+
+
+The 'flatMap' Intermediate operation:
+
+    - In interface Stream<T>
+
+        <R> Stream<R> flatMap(Function<T,Stream<R>> f)
+
+    - Applies function f to every element, f returns a new stream for each element
+
+    - Merges all the resulting element streams
+
+
+---------------------------------------------------------------------------------------
+
+using 'flatMap'
+
+    - say that a Book contains a list of words(Strings)
+    - Objective: Print all distinct words from a set of books
+
+
+        Set<Book> lib=....
+
+        lib.stream()
+           .flatMap(book->book.getWords().stream())
+           .distinct()
+           .forEach(System.out""println) 
+
+
+---------------------------------------------------------------------------------------
+
+ A Monad is a Paramatric Type M<T>
+
+    - Adding some context to T ( some extra info )
+    - with two operations
+        unit:T -> M<T>
+        bind:(M<T>,(T->M<R>))->M<R>
+
+---------------------------------------------------------------------------------------
+
+
+The 'Unit' Operation        
+
+    - unit(t:T):M<T> - wraps a plain value in some default context
+
+    - with Streams
+
+        Stream.of(...);
+
+    - wrapping String into Stream<String>:
+
+        Stream<String> s=Stream.of("Hello");    
+
+---------------------------------------------------------------------------------------
+
+The 'bind' operation
+
+    Inputs:
+
+        - A value with context m : M<T>
+
+        - A function f:T->M<R> from plain values to another type with context 
+
+    Objective: apply f to m
+
+    Solution:
+
+        unwrap m                                   ( we get T and a context )
+        apply f to plain value                     ( we get M<R> )
+        combine old context and new context        ( we get another M<R>)            
+
+
+    'bind' is the recipe for combining contexts    
+
+    ---------------------------------------------------------------------------------------
+
+    The 'bind' function
+
+        - bind(m:M<T>,f:T->M<R>):M<R>
+          unwraps m, applies f,combine contexts
+
+
+
+        - with streams, stream.flatMap(f)
+
+                        unwraps stream, applies f, concatenate resulting stream  
+
+
+    ---------------------------------------------------------------------------------------
+
+    Streams are Monads!
+
+    ---------------------------------------------------------------------------------------
+
+
+    Chaining Monad operations
+
+        Monads support operation chaining
+
+
+        Given         f:T->M<R>     and   g:R->M<S>
+
+        you can get:
+
+
+                      T -unit-> M<T>     ->bind:f-> M<R>  -bind:g-> M<S>
+
+   ---------------------------------------------------------------------------------------
+
+
+   From flatMap to map
+
+    Suppose you have
+
+        a value with context m:M<T>
+        a function           f:T<R>   ( knows nothing about cotexts )
+
+        can u apply f to m ?
+
+    1. teach contexts to f'
+
+        Let f'(t)=unit(f(t))                f':T->M<R>   ( f  and then default context )
+
+    2. invoke bind(m,f')
+
+        Result: M<T>
+
+       with streams:
+
+            stream.map(f);         
+
+---------------------------------------------------------------------------------------            
+
+
+
+
+
+=================================================================================================
+ Level 5 - Stream Operation
+=================================================================================================
+
+
+5.1 Filtering Stream Elements
+---------------------------------------------------------------------------------------            
+How can we select or discard specific elements from a stream?
+
+    - Elements can be filtered by their content, using a Predicate
+    - Elements can be filtered based on their amount
+    - Duplicate elements can be removed
+
+---------------------------------------------------------------------------------------      
+
+Intermediate operations that select some elements and discard others
+
+    based on:
+
+        - content
+        - amount
+        - Uniqueness
+
+---------------------------------------------------------------------------------------   
+
+    Stream Operations
+
+        Intermediate      --> return Stream<T> or Stream<R>
+        Terminal:         --> return anything else or void
+
+---------------------------------------------------------------------------------------   
+
+
+Filtering operations
+
+    based on:
+
+        - content   : filter,takeWhile,dropWhile
+        - amount    : limit
+        - Uniqueness: distinct
+
+---------------------------------------------------------------------------------------   
+
+Filter Operation
+
+    Stream<T> filter(Predicate<? super T> property);
+
+---------------------------------------------------------------------------------------   
+
+Limit operation
+
+    picks first n elements ( or less )
+
+    Stream<T> limit(long n)
+
+--------------------------------------------------------------------------------------- 
+
+distinct operation
+
+
+    discards duplicates ( according to equals)
+
+    Stream<T> distinct()    
+
+--------------------------------------------------------------------------------------- 
+
+Example
+
+    Objective : select 10 random positive distinct integers
+
+    final Random random=new Random();
+    Stream<Integer> randoms=Stream.generate(random:nextInt);
+
+    randoms.filter(n->n>0)
+           .distict()
+           .limit(10)
+           .forEach(System.out::println);
+
+
+    randoms.filter(n->n>0)
+           .limit(10)
+           .distict()
+           .forEach(System.out::println); 
+
+    randoms.distict()
+           .filter(n->n>0)
+           .limit(10)
+           .forEach(System.out::println);              
+
+    Note : the example would be simpler and more efficient with IntStream
+
+
+--------------------------------------------------------------------------------------- 
+
+about the distinct operation
+
+    - one of the few stateful intermediate operations
+    - it does not operate independently on eact element
+    - harder to Parallelise
+
+--------------------------------------------------------------------------------------- 
+
+TakeWhile Operation  ( java 9 )
+
+    Takes element as long as a Predicate true
+
+        Stream<T> takeWhile(Predicate<? super T> property)
+
+--------------------------------------------------------------------------------------- 
+
+dropWhile Operation ( java 9 )
+
+    discards elements as long as a Predicate true
+
+        Stream<T> dropWhile(Predicate<? super T> property)
+
+
+--------------------------------------------------------------------------------------- 
+
+
+takeWhile Example
+
+    - You have sequence of employees, sorted by increasing salary
+    - you want the employees with salary at most 2000
+
+        Stream<Employee> sortedEmps=...
+
+
+        sortedEmps.filter(e->e.getSalaray()<=2000)
+                  .forEach(System.out::println);
+
+    - it works, but it scans the whole system 
+
+
+
+        sortedEmps.takeWhile(e->e.getSalaray()<=2000)
+                  .forEach(System.out::println);
+
+
+    - stop as soon as th Predicate is false
+
+
+   --------------------------------------------------------------------------------------- 
+
+
+   take/drop-while on unordered streams
+
+
+    - No guarantee as to what elements will be taken/dropped
+    - Almost useless, but you may want to stlop a stream according to some external Condition; 
+
+
+        static volatile boolean keepGoing=true;
+        infiniteStream.takeWhile(x->keepGoing);
+
+        Note : a badly non-functional programming
+
+    --------------------------------------------------------------------------------------- 
+
+
+    5.2 : Transforming and Rearranging Stream Elements
+    --------------------------------------------------------------------------------------- 
+
+    How can I manipulate stream elements? How can I sort a stream?
+
+        - The map operation applies a function to every element
+        - The sorted operations sort a stream
+        - Discarding the order may improve the parallel performance
+
+    --------------------------------------------------------------------------------------- 
+
+
+    Transforming operations
+
+        - apply function that modify content and type
+
+
+            function T -> Stream<R>      : flatMap
+            function T -> T or R         : map
+
+
+            
+    --------------------------------------------------------------------------------------- 
+
+
+    map operation
+
+
+        - applies function to every element
+
+        Stream<R> map(Function<? super T,? extends R> fun)
+
+
+    --------------------------------------------------------------------------------------- 
+
+    Example
+
+        - Assume Employee contains an Address, whicj contains a City
+
+        Objective : print names of cities where at least one employee lives
+
+        Stream<Employee> emps=...;
+
+        emps.map(Employee::getAddress)
+            .map(Address::getCity)
+            .map(City:getName)
+            .distict()
+            .forEach(System.out::println);
+
+    --------------------------------------------------------------------------------------- 
+
+    Rearranging operations:
+
+
+        - Sorting
+            => based on natural order ( comparable )
+            => based on Comparator
+        - UnOrdering
+            => Convert stream to un-ordered
+            => release ordering guarantee
+
+    --------------------------------------------------------------------------------------- 
+
+    Sort Operations
+
+        - Accoring to a custom ordering
+
+            Stream<T> sorted()
+            Stream<T> sorted(Comparator<? super T> comp);
+
+        - Steful operations
+
+   --------------------------------------------------------------------------------------- 
+
+   Example
+
+    Objective: Print names of the employees with the highest salary
+
+
+
+            Stream<Employee> emps=...;
+
+            emps
+                .sorted(Comparator.comparingInt(Employee::getSalary.reversed())
+                .limit(10)
+                .map(Employee::getName)
+                .forEachOrdered(System.out::println)
+
+    ---------------------------------------------------------------------------------------  
+
+    Unordered Operations
+
+        - convert stream to unordered
+
+            Stream<T> unordered();
+
+
+                - it does nothing to the data
+                - releases ordering guarantee
+                - May improve parallel performance           
+
+    ---------------------------------------------------------------------------------------  
+
+    Example
+
+        Objective : efficiently count the number od distinct integers in a list
+
+
+        List<Integer> list=....;
+        long n=list.parallelStream()
+                   .unordered()
+                   .distinct()
+                   .count();         
+
+    ---------------------------------------------------------------------------------------                 
+
+    5.3 Basic Terminal Operations
+    ---------------------------------------------------------------------------------------   
+
+    How can I terminate a stream? How can I summarize a stream into a single object?
+
+        - Terminal operations can execute a consumer on each element
+        - Terminal operations can also build arrays
+        - Some terminal operations return a specific element    
+
+    ---------------------------------------------------------------------------------------   
+
+
+    Standard Terminations for Stream<T>
+
+    - forEach(),forEachOrdered(),[peek]    : void
+    - allMatch(),anyMatch(),noneMatch() : boolean
+    - toArray()  : array
+    - count()    : long 
+    - findFirst(),findAny(),min(),max()    : T
+
+    ---------------------------------------------------------------------------------------   
+
+
+    terminations to void 
+
+        - execute a Consumer for each element
+
+            - forEach(),forEachOrdered(),[peek]    : void
+
+
+    ---------------------------------------------------------------------------------------   
+
+    Peek Example
+
+    Objective : Debug a complex pipeline
+
+
+        Stream<Integer> stream=...;
+        stream.peek(System.out::println)
+              .fileter(n->n>0)
+              .distinct()
+              .limit(10)
+              .forEach(System.out::println)
+
+    ---------------------------------------------------------------------------------------  
+
+
+    Terminations to boolean
+
+        - check truthfulness of a predicate
+
+          - allMatch(),anyMatch(),noneMatch() : boolean
+
+    ---------------------------------------------------------------------------------------  
+
+
+    allMatch example
+
+
+        Collection<Employee> emps=...;
+        boolean allValid=emps.stream()
+                             .allMatch(e->e.getName() != null && e.getName().length()>0);     
+
+    ---------------------------------------------------------------------------------------  
+
+    Terminations to array
+
+        - save elements in a new array 
+
+            - toArray()
+            - toArray(IntFunction<A[]> factory);                        
+
+    ---------------------------------------------------------------------------------------  
+
+    toArray Example
+
+
+        Objective: collect employees having low salaries
+
+
+
+        Stream<Employee> emps=...'
+
+        Object[] lowEmps=emps.filter(e->e.getSalaray<2000)
+                             .toArray()  
+
+        Employee[] lowEmps=emps.filter(e->e.getSalaray<2000)
+                               .toArray(Employee[]::new)                             
+
+    ---------------------------------------------------------------------------------------  
+
+    count Example
+
+
+    ---------------------------------------------------------------------------------------  
+
+    Terminations to an Element
+
+        - Extract an element from the Stream
+
+
+
+            - findFirst(),findAny(),min(Comparator<? super T>),max(Comparator<? super T>)    : OPtional<T>
+
+    ---------------------------------------------------------------------------------------
+
+    Optional class
+
+        - Functional-style alternative to rturning 'null;
+        - can be chained
+
+            String result=stream.min(comparator).orElse('default');
+
+        - methods
+            - isPrsent()
+            - get()    
+    ---------------------------------------------------------------------------------------
+
+    Max Example
+
+
+        Objective: Find the longest string in a collection
+
+
+            Collection<string> strings=...
+
+            Optional<String> longest=strings.stream()
+                                            .max(Comparator.comparingInt(String::length));                
+
+---------------------------------------------------------------------------------------
+
+
+5.4- Reductions and Collectors
+---------------------------------------------------------------------------------------
+What if standard terminal operations do not fit my needs? How can I define a custom terminal operation?
+
+    - Streams support stateless and mutable custom terminations
+    - Streams are equipped with a variety of standard collectors
+    - Some standard collectors can build complex maps
+---------------------------------------------------------------------------------------
+Custom Terminal Operations
+
+    - summarize a stream into a single object
+
+        1. Functional ( i.e stateless )    : reduce
+        2. Mutable ( i.e stateful)         : collect 
+
+---------------------------------------------------------------------------------------
+
+A common summarization Pattern
+
+    - Repeatedly apply a binary operation, starting from a seed
+
+        T summary=seed;
+        for(T t:collection){
+            summary=operation(summary,seed)
+        }
+
+    - Examples
+
+            - sum elements
+            - compute the minimum and maximum
+
+
+---------------------------------------------------------------------------------------
+
+Reduce Terminal operation
+
+        - summarize using a BinaryOperator
+
+            T reduce(T seed,BinaryOperator<T> accumulator)
+
+            Example: string concatenation
+
+
+            Collection<String> words=...
+            String allWords=words.stream()
+                                 .reduce("" ,(a,b)->a+" "+b);
+
+            warning : Inefficient, Quadradic complexity! Use a mutable summarization;                            
+
+---------------------------------------------------------------------------------------
+
+Parall Reductions
+
+    - Reduce can be efficiently Parallelized, provided
+
+        1. the binary operation is stateless ans associative
+        2. the seed is an identity for the binary operation, 
+        3. when one of the above is false, reduce will not work correctly on parallel streams.
+
+---------------------------------------------------------------------------------------
+
+The binary operation must be stateless
+
+    - stateless
+
+        (String a,String b)->a+ " "+b;
+        (double a,double b)->a*b;
+
+     - stateful
+
+        (int a,int b) -> {
+            sum+=a+b;
+            if(sum>0) return a;
+            else return b;
+        }   
+
+---------------------------------------------------------------------------------------
+
+The Binary operation Must be associative
+
+
+    - Order of application is irrelevant:
+
+        a op ( b op c) = ( a op b) op c
+
+    - Associative  : addition, multiplication, string concatenation
+    - Not Associative : subtraction
+
+---------------------------------------------------------------------------------------
+
+
+The seed Must be an Identity
+
+    seed op a = a
+
+
+
+    Examples
+
+        if op is +   , seed must be 0
+        if op is *   , seed must be 1
+        if op is String::concat , seed must be ""
+
+---------------------------------------------------------------------------------------
+
+
+Mutable summarization
+
+
+    - build a summary object & Repeatedly update it
+
+
+        T summary=seed;
+        for(T t:collection){
+            summary=operation(summary,seed)
+        }
+
+        examples : put eleemnts into another , build a ( key,value) map
+
+
+
+---------------------------------------------------------------------------------------
+
+Mutable summarization
+
+ With stream
+
+    Summary summary=collection.stream()
+                              .collect(()->new Summary(),(Summary s,T t)->s.update(t),combiner);
+
+
+---------------------------------------------------------------------------------------
+
+collect Terminal operation
+
+
+    - summarize using a factory, an accumulator ans a combiner
+
+
+        S collect(Supplier<s> factory,BiConsumer<S,T> accumulator,BiConsumer<S,S> combiner)
+
+
+        where
+
+            factory     : provides the initial summary object
+            accumulator : updates the summary with a new element
+            combiner    : incorporates second summary into first one ( parallel only )
+
+
+---------------------------------------------------------------------------------------
+
+
+Example : concatenating string  ( imperative style )
+
+
+    StringBuilder summary=new StringBuilder();
+    for(String s:collection){
+        summary.append(s);
+    }
+
+
+with stream, functional style
+
+    StringBuilder summary=collection.stream().collect(
+        ()->new StringBuilder(),
+        (String Builder builder,String s)->builder.append(s),
+        (StringBuilder builder1,StringBuilder bulder2)->builder1.append(builder2)
+    );
+
+    // or
+
+    StringBuilder summary=collection.stream().collect(
+        StringBuilder::new,
+        StringBuilder::append,
+        StringBuilder::append
+    );
+
+    // or
+     StringBuilder summary=collection.stream().collect(
+       Collectors.joining()
+    );
+
+---------------------------------------------------------------------------------------
+
+
+Collect Terminal Operation
+
+
+    - summarize using a Collector
+
+        <S,R> R collect(Collector<T,S,R> collector)
+
+
+---------------------------------------------------------------------------------------
+
+Standard collectors
+
+
+ static factory methods of Collectors, returning Collector
+
+ To Strings      : joining()
+ To standard collections : toList(), toSet(), toCollection()
+ to maps                 : tomap(), groupingBy(), partitioningBy()
+
+
+ ---------------------------------------------------------------------------------------
+
+ summarizing into a string
+
+
+    - joining();
+    - joining(CharSequence delimeter)
+
+
+
+---------------------------------------------------------------------------------------
+
+summarizing into standard collection
+
+    -toCollection()
+    -toList()
+    -toSet()
+
+
+---------------------------------------------------------------------------------------
+
+
+Example
+
+    Stream<Employee> emps=...;
+    
+    TreeSet<Employee> tree=emps.collect(
+        Collectors.toCollection(()->new TreeSet<Employee>(Comparator.comparingInt(Employee::getSalary)));
+    );    
+
+---------------------------------------------------------------------------------------
+
+summarizing into maps
+
+
+
+    - toMap    : each element generates a (key,value) pair   , result : map<K,V>
+    - groupingBy : elements are grouped based on Function , result Map<K,List<T>>
+    - partitioningBy : elements are grouped based on a Predicate , Map<boolean,List<T>>
+
+---------------------------------------------------------------------------------------
+
+summarizing Stream<T> into a Map<K,V>
+
+    - toMap(
+        Function<T,K> keyMapper,
+        Function<T,V> valueMapper
+    );
+
+    result: returns sequential collector
+
+    - toConcurrentMap(
+        Function<T,K> keyMapper,
+        Function<T,V> valueMapper
+    );
+
+        result: returns a concurrent( but un-order) collector
+
+
+    - They throw an exception if 2 elements map to the same key;
+
+---------------------------------------------------------------------------------------
+
+
+   Example : summarizing into a Map
+
+   Objective : Build a Map from employees' names to their salaries 
+
+    Stream<Employee> emps=...
+
+    Map<String,Integer> salaries=emps.collect(
+        Collectors.toMap(Employee::getName,Employee::getSalary);
+    );
+
+---------------------------------------------------------------------------------------
+
+    grouping elements according to the key
+
+
+        - a keyMapper provides a key for each element
+        - elements with the same key end up in the same group ( that is, list)
+
+
+            - groupingBy(Function<T,K> keyMapper);
+
+---------------------------------------------------------------------------------------
+
+   Example : grouping by a key
+
+   Stream<Employee> emps=...
+   Map<Integer,List<Employee>> brackets=emps.collect(Collectors.groupingBy(e->e.getSalaray()/1000));      
+
+
+---------------------------------------------------------------------------------------
+
+    grouping elements According to Predicate
+
+
+    stream.partitioningBy(Predicate p)
+
+---------------------------------------------------------------------------------------
+
+   5.5- Streams of Primitive Types
+--------------------------------------------------------------------------------------- 
+
+   Can we avoid wrapping and unwrapping operations when dealing with primitive types?
+
+        - Specialized streams exist for int, long, and double values
+        - Specialized streams provide special operations tailored to numerical elements
+        - Specialized mapping operations turn streams into specialized ones   
+---------------------------------------------------------------------------------------
+
+
+In Stream<T>
+
+    T reduce(T seed,BinaryOperator<T> op)
+
+IntStream,LongStream,DoubleStream , ...
+
+---------------------------------------------------------------------------------------
+
+special methods
+
+
+    - range, rangeClosed
+    - sum(), avg()
+    - min(), max()
+
+
+---------------------------------------------------------------------------------------
+
+Stream<T>
+
+    -mapToInt()
+    -mapToDouble()
+    -mapToLong()
+    
+
+---------------------------------------------------------------------------------------
+
+Example
+
+OptionalDouble avgSalary=emps.mapToInt(Employee::getSalaray).average()
+
+
+
+---------------------------------------------------------------------------------------
+
+
+
+
+
+
+=================================================================================================
+ Level 6 - Parallel Streams
+=================================================================================================
+
+6.1 Recognizing and Avoiding Statefulness and Side Effects
+---------------------------------------------------------------------------------------
+How can we create a parallel stream? What is a stateless function and how does it help achieve correct and efficient parallel execution of stream pipelines?
+    - A stream can be created parallel or be converted into one
+    - Stateless functions always return the same result for the same arguments
+    - Stateless functions do not interfere if executed concurrently
+---------------------------------------------------------------------------------------
+
+
+Creating parallel Stream
+
+    - From collection
+
+        Collection::parallelStream
+
+    - From any other source
+
+        Stream::parallel    
+
+---------------------------------------------------------------------------------------
+
+
+The last Mode wins
+
+    stream.parallel()
+          .filter()
+          .map(...)
+          .parallel()
+          .forEach(...)
+
+---------------------------------------------------------------------------------------
+
+Parallel stream
+
+    - stream elements are assigned to different threads
+    - each thread executes the whole pipeline on a subset of the elements
+    - More info , refer ( fork-join) framework
+
+---------------------------------------------------------------------------------------
+
+Example : compute total salary of employees
+
+Functional ( sequential )
+
+    Collection<Employee> emps=....;
+
+    int totalSalary=emps.stream()
+                        .mapToInt(Employee::getSalary)
+                        .sum();
+
+Functional ( parallel )
+
+    int totalSalary=emps.stream()
+                        .parallel()
+                        .mapToInt(Employee::getSalary)
+                        .sum();                    
+---------------------------------------------------------------------------------------
+
+imperativly ( sequentially )
+
+    class SalaryAdder{
+        int total;                             
+        public void accept(Employee e){
+            total+=e.getSalaray();
+        }
+    }
+
+    SalaryAdder adder=new SalaryAdder();
+
+    emps.stream()
+        .forEach(adder::accept);
+
+    int totalSalary=adder.total;
+
+
+
+imperativly ( parallel )        ====> race-cndition
+
+
+    emps.stream()
+        .parallel()
+        .forEach(adder::accept);
+
+    int totalSalary=adder.total;
+
+
+
+---------------------------------------------------------------------------------------
+
+Think Functionaly
+
+---------------------------------------------------------------------------------------
+
+Pillars of Functional-style Programming
+
+    - immutable objects
+    - Stateless functions
+
+---------------------------------------------------------------------------------------
+
+    Immutable Objects
+
+    - All final fields
+    - All reference fields point to immutable objects, like string,integer, and so on 
+
+---------------------------------------------------------------------------------------
+
+    Immutable Objects
+
+    But how do i update an object ?
+
+        ypu dont, you build a new one.
+
+        e.g java strings
+
+---------------------------------------------------------------------------------------
+
+
+    Stateless Functions
+
+        - do not modify fields of enclosing object(this)
+        - do not modify static fields of enclosing class ( or other class )
+        - do not modify state the state of its arguments
+        - Hence, always the same return value for the same arguments  
+
+           (ak.a) referential transparency 
+
+        in addition, pure function should have no side effects, so no I/O and no exceptions
+
+ ---------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------
+6.2  Using Parallel Streams              
+---------------------------------------------------------------------------------------
+
+How do different stream sources and operations behave under parallel execution?
+
+    - Some data sources for parallel streams are more efficient than others
+    - Stateless operations are more efficient than stateful ones
+    - Most terminal operations support efficient parallelization
+
+
+---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+    
+
+
