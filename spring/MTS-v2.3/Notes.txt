@@ -1,0 +1,20 @@
+
+
+
+ Model
+ -----------
+ 
+  - Account
+  
+  
+   layer(s)
+   
+    - DAO/Repository layer    : persisting logic
+    
+    - service/business layer  : processing logic
+    
+    - web layer               : web-service ( SOAP or REST )
+    
+     
+    
+    
